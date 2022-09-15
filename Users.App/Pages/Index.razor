@@ -1,0 +1,174 @@
+﻿@page "/";
+@using Users.App.Pages.PageBases;
+@inherits IndexBase;
+
+<section id="home" class="page">
+    @if (Loading)
+    {
+        <div class="page-container page-loads">
+            <div id="loading"></div>
+        </div>
+    }
+    else
+    {
+        <div class="page-container">
+            <div class="page-header">
+                <h1>Welcome to users registry!</h1>
+                <p>You can register new users, update and remove previous ones.</p>
+            </div>
+
+            <div class="table">
+                <table class="neoumoprhic-table">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Street Name</th>
+                        <th>House Number</th>
+                        <th>Apartment Number</th>
+                        <th>Postal Code</th>
+                        <th>Town</th>
+                        <th>Phone Number</th>
+                        <th>Date Of Birth</th>
+                        <th>Age</th>
+                        <th class="action"></th>
+                        <th class="action"></th>
+                    </tr>
+
+                    @foreach (var user in Users)
+                    {
+                        @if (!user.Removed)
+                        {
+                            @if (!user.IsEdited)
+                            {
+                                <tr>
+                                    <td>@user.UserReadDto.FirstName</td>
+                                    <td>@user.UserReadDto.LastName</td>
+                                    <td>@user.UserReadDto.StreetName</td>
+                                    <td>@user.UserReadDto.HouseNumber</td>
+                                    <td>@user.UserReadDto.ApartmentNumber</td>
+                                    <td>@user.UserReadDto.PostalCode</td>
+                                    <td>@user.UserReadDto.Town</td>
+                                    <td>@user.UserReadDto.PhoneNumber</td>
+                                    <td>@user.DOB</td>
+                                    <td>@user.UserReadDto.Age</td>
+                                    <td class="action-td"><button @onclick="(e => ToggleEditUser((Guid)user.UserReadDto.Id))" class="btn-primary btn-secondary">Edit</button></td>
+                                    <td class="action-td"><button @onclick="(e => AddUserToRemove(user.UserReadDto))" class="btn-primary btn-danger">Delete</button></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td><input @bind="user.UserUpdateDto.FirstName" placeholder="First Name" class="underline-input" /></td>
+                                    <td><input @bind="user.UserUpdateDto.LastName" placeholder="Last Name" class="underline-input" /></td>
+                                    <td><input @bind="user.UserUpdateDto.StreetName" placeholder="Street Name" class="underline-input" /></td>
+                                    <td><input @bind="user.UserUpdateDto.HouseNumber" placeholder="House Nr" class="underline-input" /></td>
+                                    <td><input @bind="user.UserUpdateDto.ApartmentNumber" placeholder="Apartment Nr" class="underline-input" /></td>
+                                    <td><input @bind="user.UserUpdateDto.PostalCode" placeholder="Postal Code" class="underline-input" /></td>
+                                    <td><input @bind="user.UserUpdateDto.Town" placeholder="Town" class="underline-input" /></td>
+                                    <td><input @bind="user.UserUpdateDto.PhoneNumber" placeholder="Phone Nr" class="underline-input" /></td>
+                                    <td><input @bind="user.DOB" maxlength="10" placeholder="dd/mm/yyyy" class="underline-input" /></td>
+                                    <td></td>
+                                    <td class="action-td"></td>
+                                    <td class="action-td"><button @onclick="(e => ToggleEditUser((Guid)user.UserReadDto.Id))" class="btn-primary btn-danger">Cancel</button></td>
+                                </tr>
+                                @if(user.Errors != null)
+                                {
+                                    <tr>
+                                        <td colspan="12">
+                                    
+                                                @foreach(var error in user.Errors)
+                                                {
+                                                    <p class="text-danger">@error</p>
+                                                }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+
+                    @if(Users.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="12">
+                                <p>There is no users</p>
+                            </td>
+                        </tr>
+                    }
+
+                    @foreach (var userToRegister in UsersToRegister)
+                    {
+                        <tr>
+                            <td><input @bind="userToRegister.UserRegisterDto.FirstName" placeholder="First Name" class="underline-input" /></td>
+                            <td><input @bind="userToRegister.UserRegisterDto.LastName" placeholder="Last Name" class="underline-input" /></td>
+                            <td><input @bind="userToRegister.UserRegisterDto.StreetName" placeholder="Street Name" class="underline-input" /></td>
+                            <td><input @bind="userToRegister.UserRegisterDto.HouseNumber" placeholder="House Nr" class="underline-input" /></td>
+                            <td><input @bind="userToRegister.UserRegisterDto.ApartmentNumber" placeholder="Apartment Nr" class="underline-input" /></td>
+                            <td><input @bind="userToRegister.UserRegisterDto.PostalCode" placeholder="Postal Code" class="underline-input" /></td>
+                            <td><input @bind="userToRegister.UserRegisterDto.Town" placeholder="Town" class="underline-input" /></td>
+                            <td><input @bind="userToRegister.UserRegisterDto.PhoneNumber" placeholder="Phone Nr" class="underline-input" /></td>
+                            <td><input @bind="userToRegister.UserRegisterDto.DateOfBirth" maxlength="10" placeholder="dd/mm/yyyy" class="underline-input" /></td>
+                            <td></td>
+                            <td class="action-td"></td>
+                            <td class="action-td"><button @onclick="(e => RemoveUserToRegister((Guid)userToRegister.UserRegisterDto.TempId))" class="btn-primary btn-danger">Cancel</button></td>
+                        </tr>
+                        @if(userToRegister.Errors != null)
+                        {
+                            <tr>
+                                <td colspan="12">
+                                
+                                        @foreach(var error in userToRegister.Errors)
+                                        {
+                                            <p class="text-danger">@error</p>
+                                        }
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </table>
+            </div>
+
+            <div class="action-buttons-container">
+                <div class="action-buttons">
+                    <button @onclick="AddUserToRegister" class="btn-primary btn-primary-big add-btn">Add new</button>
+
+                    @if (UsersToRegister.Count > 0 || UsersToRemove.Count > 0 || UsersToUpdateIds.Count > 0)
+                    {
+                        <button @onclick="ToggleSaveModal" class="btn-primary btn-primary-big btn-secondary">Save</button>
+                        <button @onclick="Cancel" class="btn-primary btn-primary-big btn-danger">Cancel</button>
+                    }
+                    else
+                    {
+                        <button class="btn-primary btn-primary-big btn-secondary btn-disabled">Save</button>
+                        <button class="btn-primary btn-primary-big btn-danger btn-disabled">Cancel</button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+
+@if (ShowSavingModal)
+{
+    <div class="modal-bg">
+        @if (!Saving)
+        {
+            <div class="modal">
+                <h1>Do you want to confirm saving changes?</h1>
+                <div class="modal-buttons">
+                    <button @onclick="Save" class="btn-primary btn-primary-big btn-success">Confirm</button>
+                    <button @onclick="ToggleSaveModal" class="btn-primary btn-primary-big btn-secondary">Cancel</button>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="modal">
+                <div id="loading"></div>
+            </div>
+        }
+    </div>
+}
+

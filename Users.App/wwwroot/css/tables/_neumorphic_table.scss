@@ -1,0 +1,39 @@
+.neoumoprhic-table {
+    width: 100%;
+    color: $white;
+    font-size: 1.2rem;
+
+    tr {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    th {
+        background-color: $primary-dark;
+        padding: 0.5em 0;
+        border-radius: 0.5em;
+        font-size: 0.9rem;
+        color: $secondary;
+        width: 0;
+        text-align: center;
+    }
+
+    td {
+        background-color: $primary-dark;
+        padding: 0.5em 0em;
+        flex: 1 1 0;
+        font-size: 0.9rem;
+        border-radius: 0.5em;
+        height: 70px;
+        width: 70px;
+        text-align: center;
+    }
+
+    .action-td {
+        width: 40px;
+    }
+
+    .action {
+        width: 40px;
+    }
+}

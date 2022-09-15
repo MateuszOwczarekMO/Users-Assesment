@@ -1,0 +1,22 @@
+#home {
+  .action-buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 2em 0;
+
+    .action-buttons {
+      width: 100%;
+      max-width: 400px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 1em;
+    }
+
+    .add-btn {
+      grid-column: span 2;
+    }
+  }
+}

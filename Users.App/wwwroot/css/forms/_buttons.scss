@@ -1,0 +1,53 @@
+.btn-primary {
+    display: block;
+    width: 100%;
+    color: $white;
+    background: $primary-dark;
+    border: none;
+    cursor: pointer;
+    padding: 0.2em 0;
+    border-radius: 0.5em;
+    transition: 0.5s background-color;
+
+    &:hover {
+        background-color: $primary-light;
+    }
+}
+
+.btn-primary-big {
+    height: 50px;
+    font-size: 1.1rem;
+}
+
+.btn-secondary {
+    background: $secondary;
+
+    &:hover {
+        background-color: $primary-light;
+    }
+}
+
+.btn-danger {
+    background: $red;
+
+    &:hover {
+        background-color: $primary-light;
+    }
+}
+
+.btn-success {
+    background: $green;
+
+    &:hover {
+        background-color: $primary-light;
+    }
+}
+
+.btn-disabled {
+    background-color: $grey;
+    cursor: auto;
+
+    &:hover {
+        background-color: $grey;
+    }
+}

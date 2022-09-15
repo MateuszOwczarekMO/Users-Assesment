@@ -1,0 +1,16 @@
+.underline-input {
+    width: 80px;
+    background-color: unset;
+    padding: 0.5em 0;
+    text-align: center;
+    font-size: 0.9rem;
+    border: unset;
+    color: $white;
+    border-bottom: 3px solid $pink-fade;
+    transition: 0.5s border;
+
+    &:focus {
+        border-color: $pink;
+        outline: unset !important;
+    }
+}
